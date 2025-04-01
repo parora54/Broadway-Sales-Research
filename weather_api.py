@@ -12,10 +12,10 @@ openmeteo = openmeteo_requests.Client(session = retry_session)
 url = "https://archive-api.open-meteo.com/v1/archive"
 params = {
 	"latitude": 40.759,
-	"longitude": 73.9845,
+	"longitude": -73.9845,
 	"start_date": "1996-03-24",
 	"end_date": "2025-02-02",
-	"daily": ["temperature_2m_mean", "temperature_2m_min", "temperature_2m_max", "apparent_temperature_max", "apparent_temperature_min", "apparent_temperature_mean", "sunset", "sunrise", "precipitation_sum", "precipitation_hours", "daylight_duration", "sunshine_duration", "snowfall_sum", "rain_sum", "wind_gusts_10m_max", "wind_speed_10m_max", "weather_code"],
+	"daily": ["temperature_2m_mean", "temperature_2m_min", "temperature_2m_max", "apparent_temperature_max", "apparent_temperature_min", "apparent_temperature_mean", "sunset", "sunrise", "precipitation_sum", "precipitation_hours", "daylight_duration", "sunshine_duration", "snowfall_sum", "showers_sum", "rain_sum", "wind_gusts_10m_max", "wind_speed_10m_max", "weather_code"],
 	"timezone": "auto"
 }
 responses = openmeteo.weather_api(url, params=params)
@@ -42,10 +42,11 @@ daily_precipitation_hours = daily.Variables(9).ValuesAsNumpy()
 daily_daylight_duration = daily.Variables(10).ValuesAsNumpy()
 daily_sunshine_duration = daily.Variables(11).ValuesAsNumpy()
 daily_snowfall_sum = daily.Variables(12).ValuesAsNumpy()
-daily_rain_sum = daily.Variables(13).ValuesAsNumpy()
-daily_wind_gusts_10m_max = daily.Variables(14).ValuesAsNumpy()
-daily_wind_speed_10m_max = daily.Variables(15).ValuesAsNumpy()
-daily_weather_code = daily.Variables(16).ValuesAsNumpy()
+daily_showers_sum = daily.Variables(13).ValuesAsNumpy()
+daily_rain_sum = daily.Variables(14).ValuesAsNumpy()
+daily_wind_gusts_10m_max = daily.Variables(15).ValuesAsNumpy()
+daily_wind_speed_10m_max = daily.Variables(16).ValuesAsNumpy()
+daily_weather_code = daily.Variables(17).ValuesAsNumpy()
 
 # Create a dictionary with daily weather data
 daily_data = {"date": pd.date_range(
@@ -69,6 +70,7 @@ daily_data["precipitation_hours"] = daily_precipitation_hours
 daily_data["daylight_duration"] = daily_daylight_duration
 daily_data["sunshine_duration"] = daily_sunshine_duration
 daily_data["snowfall_sum"] = daily_snowfall_sum
+daily_data["showers_sum"] = daily_showers_sum
 daily_data["rain_sum"] = daily_rain_sum
 daily_data["wind_gusts_10m_max"] = daily_wind_gusts_10m_max
 daily_data["wind_speed_10m_max"] = daily_wind_speed_10m_max
